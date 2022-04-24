@@ -25,25 +25,19 @@ const posts = [
     {id: 4, message: 'Dada', likesCount: 11}
 ]
 
-export type AppPropsType = {
-    dialogs: Array<DialogsType>
-    messages: Array<MessagesType>
-    posts: Array<PostsType>
-}
-type DialogsType = {
+export type DialogsType = {
     id: number
     name: string
 }
-type MessagesType = {
+export type MessagesType = {
     id: number
     message: string
 }
-type PostsType = {
+export type PostsType = {
     id: number
     message: string
     likesCount: number
 }
-
 
 ReactDOM.render(
     <App dialogs={dialogs}
