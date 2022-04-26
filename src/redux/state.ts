@@ -9,6 +9,19 @@ export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
 }
+export type PostsType = {
+    id: number
+    message: string
+    likesCount: number
+}
+export type DialogsType = {
+    id: number
+    name: string
+}
+export type MessagesType = {
+    id: number
+    message: string
+}
 
 export const state: StateType = {
     profilePage: {
@@ -38,16 +51,3 @@ export const state: StateType = {
     },
 }
 
-export type DialogsType = {
-    id: number
-    name: string
-}
-export type MessagesType = {
-    id: number
-    message: string
-}
-export type PostsType = {
-    id: number
-    message: string
-    likesCount: number
-}
