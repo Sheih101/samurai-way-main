@@ -5,6 +5,7 @@ import {PostsType} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: Array<PostsType>
+    addPost: (postMessage: string) => void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
@@ -14,8 +15,9 @@ export const MyPosts = (props: MyPostsPropsType) => {
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
-        const text = newPostElement.current?.value
-        alert(text)
+        if (newPostElement.current) {
+            props.addPost(newPostElement.current.value)
+        }
     }
     return (
         <div className={s.postsBlock}>
