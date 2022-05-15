@@ -32,10 +32,10 @@ export type MessagesType = {
 }
 export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
 export type AddPostActionType = {
-    type: string
+    type: 'ADD-POST'
 }
 export type UpdateNewPostTextActionType = {
-    type: string
+    type: 'UPDATE-NEW-POST-TEXT'
     newText: string
 }
 
@@ -79,24 +79,26 @@ export const store: StoreType = {
         this._callSubscriber = observer
     },
 
-    dispatch(action: AddPostActionType | UpdateNewPostTextActionType) {
-        debugger
-        if (action.type === 'ADD-POST') {
-            const newPost: PostsType = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            // @ts-ignore
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber(this._state)
+    dispatch(action: ActionsType) {
+        switch (action.type) {
+            case 'ADD-POST':
+                const newPost: PostsType = {
+                    id: 5,
+                    message: this._state.profilePage.newPostText,
+                    likesCount: 0
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.newPostText = ''
+                this._callSubscriber(this._state)
+                break;
+            case 'UPDATE-NEW-POST-TEXT':
+                this._state.profilePage.newPostText = action.newText
+                this._callSubscriber(this._state)
+                break;
         }
     }
 }
+
 
 
 
