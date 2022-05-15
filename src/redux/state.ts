@@ -1,3 +1,11 @@
+export type StoreType = {
+    _state: RootStateType
+    getState: () => RootStateType
+    _callSubscriber: (state: RootStateType) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+    subscribe: (observer: (state: RootStateType) => void) => void
+}
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
@@ -24,7 +32,7 @@ export type MessagesType = {
     message: string
 }
 
-export const store = {
+export const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -54,7 +62,7 @@ export const store = {
         }
     },
     getState() {
-      return this._state
+        return this._state
     },
     _callSubscriber(state: RootStateType) {
         console.log(state)
