@@ -1,3 +1,5 @@
+import {ChangeEvent} from 'react';
+
 export type StoreType = {
     _state: RootStateType
     _callSubscriber: (state: RootStateType) => void
@@ -30,14 +32,7 @@ export type MessagesType = {
     id: number
     message: string
 }
-export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
-export type AddPostActionType = {
-    type: 'ADD-POST'
-}
-export type UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
+export type ActionsType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
 
 export const store: StoreType = {
     _state: {
@@ -97,6 +92,18 @@ export const store: StoreType = {
                 break;
         }
     }
+}
+
+export const addPostActionCreator = () => {
+    return {
+        type: 'ADD-POST'
+    } as const
+}
+export const updateNewPostTextActionCreator = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: e.currentTarget.value
+    } as const
 }
 
 
