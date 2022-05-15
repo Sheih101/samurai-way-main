@@ -5,27 +5,27 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {Route} from 'react-router-dom';
-import {StateType} from './redux/state';
+import {RootStateType} from './redux/state';
 
 type AppPropsType = {
-    state: StateType
-    addPost: (postMessage: string) => void
+    state: RootStateType
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 export const App = (props: AppPropsType) => {
+
     return (
         <div className="app-wrapper">
             <Header/>
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Route path='/profile'
-                       render={() => <Profile state={props.state.profilePage}
-                                              addPost={props.addPost}/>}/>
+                       render={() => <Profile profilePage={props.state.profilePage}
+                                              addPost={props.addPost}
+                                              updateNewPostText={props.updateNewPostText}/>}/>
                 <Route path='/dialogs'
-                       render={() => <Dialogs state={props.state.dialogsPage}/>}/>
-                {/*<Route path='/news' render={News}/>
-                    <Route path='/music' render={Music}/>
-                    <Route path='/settings' render={Settings}/>*/}
+                       render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
             </div>
         </div>
     );
