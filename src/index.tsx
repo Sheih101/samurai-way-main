@@ -1,4 +1,4 @@
-import {RootStateType, store} from './redux/state';
+import {RootStateType, store} from './redux/store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
