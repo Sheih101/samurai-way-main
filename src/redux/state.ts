@@ -1,5 +1,3 @@
-import {ChangeEvent} from 'react';
-
 export type StoreType = {
     _state: RootStateType
     _callSubscriber: (state: RootStateType) => void
@@ -18,6 +16,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
+    newMessageBody: string
 }
 export type PostsType = {
     id: number
@@ -32,7 +31,11 @@ export type MessagesType = {
     id: number
     message: string
 }
-export type ActionsType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
+export type ActionsType =
+    ReturnType<typeof addPostCreator> |
+    ReturnType<typeof updateNewPostTextCreator> |
+    ReturnType<typeof updateNewMessageBodyCreator> |
+    ReturnType<typeof sendMessageCreator>
 
 export const store: StoreType = {
     _state: {
@@ -60,7 +63,8 @@ export const store: StoreType = {
                 {id: 3, message: 'Yo'},
                 {id: 4, message: 'Yo'},
                 {id: 5, message: 'Yo'}
-            ]
+            ],
+            newMessageBody: ''
         }
     },
     _callSubscriber(state: RootStateType) {
@@ -90,19 +94,41 @@ export const store: StoreType = {
                 this._state.profilePage.newPostText = action.newText
                 this._callSubscriber(this._state)
                 break;
+            case 'SEND-MESSAGE':
+                const body = this._state.dialogsPage.newMessageBody
+                this._state.dialogsPage.newMessageBody = ''
+                this._state.dialogsPage.messages.push({id: 6, message: body})
+                this._callSubscriber(this._state)
+                break;
+            case 'UPDATE-NEW-MESSAGE-BODY':
+                this._state.dialogsPage.newMessageBody = action.body
+                this._callSubscriber(this._state)
+                break;
         }
     }
 }
 
-export const addPostActionCreator = () => {
+export const addPostCreator = () => {
     return {
         type: 'ADD-POST'
     } as const
 }
-export const updateNewPostTextActionCreator = (e: ChangeEvent<HTMLTextAreaElement>) => {
+export const updateNewPostTextCreator = (text: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
-        newText: e.currentTarget.value
+        newText: text
+    } as const
+}
+
+export const sendMessageCreator = () => {
+    return {
+        type: 'SEND-MESSAGE'
+    } as const
+}
+export const updateNewMessageBodyCreator = (body: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-BODY',
+        body: body
     } as const
 }
 

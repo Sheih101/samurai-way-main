@@ -23,7 +23,7 @@ export const App = (props: AppPropsType) => {
                        render={() => <Profile profilePage={props.state.profilePage}
                                               dispatch={props.dispatch}/>}/>
                 <Route path='/dialogs'
-                       render={() => <Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                       render={() => <Dialogs dialogsPage={props.state.dialogsPage} dispatch={props.dispatch}/>}/>
             </div>
         </div>
     );

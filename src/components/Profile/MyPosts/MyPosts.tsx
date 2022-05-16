@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {ActionsType, addPostActionCreator, PostsType, updateNewPostTextActionCreator} from '../../../redux/state';
+import {ActionsType, addPostCreator, PostsType, updateNewPostTextCreator} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: Array<PostsType>
@@ -13,11 +13,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
     const addPost = () => {
         if (props.newPostText.trim() !== '') {
-            props.dispatch(addPostActionCreator())
+            props.dispatch(addPostCreator())
         }
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextActionCreator(e))
+        props.dispatch(updateNewPostTextCreator(e.currentTarget.value))
     }
 
     return (
